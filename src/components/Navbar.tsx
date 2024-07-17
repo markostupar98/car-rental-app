@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import avatarImage from "../../public/avatar.png";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -130,10 +132,10 @@ const Navbar = () => {
                 >
                   <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">Open user menu</span>
-                  <img
+                  <Image
                     className="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
+                    src={avatarImage}
+                    alt="avatar"
                   />
                 </button>
               </div>
@@ -143,13 +145,11 @@ const Navbar = () => {
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
-                  tabIndex="-1"
                 >
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
-                    tabIndex="-1"
                     id="user-menu-item-0"
                   >
                     Your Profile
@@ -158,7 +158,6 @@ const Navbar = () => {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
-                    tabIndex="-1"
                     id="user-menu-item-1"
                   >
                     Settings
@@ -167,7 +166,6 @@ const Navbar = () => {
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
-                    tabIndex="-1"
                     id="user-menu-item-2"
                   >
                     Sign out
