@@ -1,3 +1,4 @@
+import FilteringCars from "@/components/FilteringCars";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import Search from "@/components/Search";
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <Search />
+      <FilteringCars />
     </>
   );
 }
