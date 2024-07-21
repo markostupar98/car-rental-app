@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import ErrorHandler from "../ErrorHandler";
 import SuccessHandler from "../SuccessHandler";
 import { login } from "@/actions/login";
+import { register } from "@/actions/register";
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
@@ -39,7 +40,7 @@ function RegisterForm() {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
@@ -66,7 +67,7 @@ function RegisterForm() {
                     <Input
                       disabled={isPending}
                       {...field}
-                      placeholder="john.doe@example.com"
+                      placeholder="John Doe"
                       type="name"
                     />
                   </FormControl>
