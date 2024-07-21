@@ -13,38 +13,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   email     String   @unique
   name      String?
-  password  String
+  emailVerified DateTime?
+  image     String?
+  password  String?
   queries   Query[]
+  accounts  Account[]
 }
 
 model Company {
-  id         Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   name       String
   cars       Car[]
   queries    Query[]
 }
 
 model Car {
-  id         Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   model      String
   brand      String
   year       Int
-  companyId  Int
+  companyId  String
   company    Company  @relation(fields: [companyId], references: [id])
   queries    Query[]
 }
 
 model Query {
-  id         Int      @id @default(autoincrement())
-  userId     Int
+  id        String      @id @default(cuid())
+  userId     String
   user       User     @relation(fields: [userId], references: [id])
-  companyId  Int
+  companyId  String
   company    Company  @relation(fields: [companyId], references: [id])
-  carId      Int
+  carId      String
   car        Car      @relation(fields: [carId], references: [id])
   startDate  DateTime
   endDate    DateTime
