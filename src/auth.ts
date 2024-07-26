@@ -4,17 +4,31 @@ import { prisma } from "./lib/db";
 import { getUserById } from "./services/user";
 import authConfig from "./auth.config";
 
-declare module "@auth/core" {
-  interface session {
-    user: { role } & DefaultSession["user"];
-  }
-}
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/auth/login",
+    error: "/error",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,
   callbacks: {
+    // async signIn({ user }) {
+    //   const existingUser = await getUserById(user.id);
+
+    //   if (!existingUser || !existingUser.emailVerified) {
+    //     return false;
+    //   }
+    //   return true;
+    // },
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;

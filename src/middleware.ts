@@ -32,7 +32,6 @@
 // };
 
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "./routes";
 
@@ -50,9 +49,9 @@ export default auth(async (req) => {
     return NextResponse.next();
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/auth/login", nextUrl));
-  }
+  // if (!isLoggedIn && !isPublicRoute) {
+  //   return NextResponse.redirect(new URL("/auth/login", nextUrl));
+  // }
   return NextResponse.next();
 });
 
