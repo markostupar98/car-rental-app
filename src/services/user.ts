@@ -16,3 +16,20 @@ export async function getUserById(userId: string) {
     throw new Error("Could not fetch user");
   }
 }
+
+export async function getUserByEmail(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Could not fetch user");
+  }
+}
