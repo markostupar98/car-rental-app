@@ -5,6 +5,7 @@ import * as z from "zod";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { sendVefiticationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/services/user";
 
@@ -25,6 +26,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     const verificationToken = await generateVerificationToken(
       existingUser.email
     );
+
+    await sendVefiticationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
+
     return { success: "Confirmation email sent!" };
   }
   try {
@@ -45,4 +52,3 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     throw error;
   }
 };
-("");
